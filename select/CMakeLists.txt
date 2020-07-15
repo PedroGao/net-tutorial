@@ -1,0 +1,1 @@
+add_executable(select_server select_server.c ../lib/common.h)
