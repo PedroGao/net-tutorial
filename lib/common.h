@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <poll.h>
 
 #define MAX_LEN 1024
 
@@ -63,6 +64,26 @@ int tcp_client(char *addr, int port) {
         error(1, errno, "connect fail");
     }
     return sockfd;
+}
+
+int tcp_server_listen(int port) {
+    int listen_fd;
+    listen_fd = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in serv_addr;
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(port);
+    inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr);
+    int on = 1;
+    setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+    int rt1 = bind(listen_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+    if (rt1 < 0) {
+        error(1, errno, "bind failed ");
+    }
+    int rt2 = listen(listen_fd, 128);
+    if (rt2 < 0) {
+        error(1, errno, "listen failed ");
+    }
+    return listen_fd;
 }
 
 #endif //NET_TUTORIAL_COMMON_H
