@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <signal.h>
 
 static int count;
 

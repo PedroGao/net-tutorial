@@ -5,7 +5,7 @@
 #ifndef NET_TUTORIAL_COMMON_H
 #define NET_TUTORIAL_COMMON_H
 
-#include <zconf.h>
+// #include <zconf.h>
 #include <errno.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -15,6 +15,11 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <poll.h>
+#include <syslog.h>
+#include <stdarg.h>
+#include <signal.h>
+#include <sys/select.h>
+#include <unistd.h>
 
 #define MAX_LEN 1024
 

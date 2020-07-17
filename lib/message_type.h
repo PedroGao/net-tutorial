@@ -1,8 +1,6 @@
 #ifndef NET_TUTORIAL_MESSAGE_TYPE_H
 #define NET_TUTORIAL_MESSAGE_TYPE_H
 
-#include <ntsid.h>
-
 typedef struct {
     u_int32_t type;
     char data[1024];
