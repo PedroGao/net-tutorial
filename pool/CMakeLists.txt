@@ -1,1 +1,1 @@
-add_executable(pool_server pool_server.c)
+add_executable(poll_server poll_server.c)
