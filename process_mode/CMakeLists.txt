@@ -1,0 +1,1 @@
+add_executable(process_mode server.c ../lib/common.h)

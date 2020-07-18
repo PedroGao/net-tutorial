@@ -4,7 +4,8 @@
 
 #include "../lib/common.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     int port = 1024;
     int sockfd = tcp_client("127.0.0.1", port);
 
@@ -19,18 +20,24 @@ int main(int argc, char **argv) {
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
-    for (;;) {
+    for (;;)
+    {
         readmask = allreads;
         int rc = select(sockfd + 1, &allreads, NULL, NULL, NULL);
-        if (rc <= 0) {
+        if (rc <= 0)
+        {
             error(1, errno, "select failed");
         }
 
-        if (FD_ISSET(sockfd, &readmask)) {
+        if (FD_ISSET(sockfd, &readmask))
+        {
             n = read(sockfd, recv_line, MAX_LEN);
-            if (n < 0) {
+            if (n < 0)
+            {
                 error(1, errno, "read error");
-            } else if (n == 0) {
+            }
+            else if (n == 0)
+            {
                 printf("server closed \n");
                 break;
             }
@@ -39,21 +46,27 @@ int main(int argc, char **argv) {
             fputs("\n", stdout);
         }
         // 标准输入
-        if (FD_ISSET(STDIN_FILENO, &readmask)) {
-            if (fgets(send_line, MAX_LEN, stdin) != NULL) {
+        if (FD_ISSET(STDIN_FILENO, &readmask))
+        {
+            if (fgets(send_line, MAX_LEN, stdin) != NULL)
+            {
                 int i = strlen(send_line);
-                if (send_line[i - 1] == '\n') {
+                if (send_line[i - 1] == '\n')
+                {
                     send_line[i - 1] = 0;
                 }
 
-                if (strncmp(send_line, "quit", strlen(send_line)) == 0) {
-                    if (shutdown(sockfd, 1)) {
+                if (strncmp(send_line, "quit", strlen(send_line)) == 0)
+                {
+                    if (shutdown(sockfd, 1))
+                    {
                         error(1, errno, "shutdown failed");
                     }
                 }
 
                 size_t rt = write(sockfd, send_line, strlen(send_line));
-                if (rt < 0) {
+                if (rt < 0)
+                {
                     error(1, errno, "write failed");
                 }
             }
