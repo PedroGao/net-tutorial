@@ -1,0 +1,2 @@
+add_executable(poll_http_server server.c channel.h buffer.h buffer.c channel.c event_loop.h event_loop.c event_dispatcher.h event_dispatcher.c poll_dispatcher.c channel_map.h channel_map.c utils.h acceptor.h acceptor.c tcp_server.h tcp_server.c thread_pool.h thread_pool.c event_loop_thread.h event_loop_thread.c tcp_connection.h tcp_connection.c)
+TARGET_LINK_LIBRARIES(poll_http_server pthread)

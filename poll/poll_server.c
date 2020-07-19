@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     for (;;) {
         int ready_number = poll(event_set, INIT_SIZE, -1);
         if (ready_number < 0) {
-            error(1, errno, "pool failed");
+            error(1, errno, "poll failed");
         }
 
         if (event_set[0].revents & POLLRDNORM) {
