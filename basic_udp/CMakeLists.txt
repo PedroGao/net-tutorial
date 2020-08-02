@@ -1,0 +1,2 @@
+add_executable(basic_udp_server udp_server.c)
+add_executable(basic_udp_client udp_client.c)

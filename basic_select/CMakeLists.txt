@@ -1,0 +1,1 @@
+add_executable(select1 select1.c ../lib/common.h)

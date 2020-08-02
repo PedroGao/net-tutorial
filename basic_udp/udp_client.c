@@ -1,0 +1,45 @@
+//
+// Created by shimo on 2020/7/22.
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <string.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+
+#define MAX_LINE 1024
+
+int main() {
+    int socket_fd;
+    socket_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (socket_fd < 0) {
+        perror("created socket failed");
+        exit(EXIT_FAILURE);
+    }
+    struct sockaddr_in server_addr;
+    bzero(&server_addr, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(1024);
+    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    socklen_t server_len = sizeof(server_addr);
+
+    struct sockaddr_in client_addr;
+    bzero(&client_addr, sizeof(client_addr));
+
+    char buf[MAX_LINE];
+    while (fgets(buf, MAX_LINE, stdin) != NULL) {
+        // socklen_t client_len = sizeof(client_addr);
+        ssize_t sent = sendto(socket_fd, buf, strlen(buf), 0, (struct sockaddr *) &server_addr, server_len);
+        if (sent < 0) {
+            perror("sent data error");
+            exit(EXIT_FAILURE);
+        }
+        memset(buf, 0, sizeof(buf));
+        recvfrom(socket_fd, buf, MAX_LINE, 0, (struct sockaddr *) &server_addr, &server_len);
+        fputs(buf, stdout);
+        memset(buf, 0, sizeof(buf));
+    }
+    return 0;
+}
